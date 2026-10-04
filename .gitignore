@@ -1,0 +1,8 @@
+# Host-local hive state must never enter repository artifacts.
+.beads/
+.bh/
+.repowise/
+.codex/
+.claude/settings.local.json
+.writable_roots
+.DS_Store
