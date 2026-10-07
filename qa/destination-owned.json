@@ -6,17 +6,21 @@
     "CONTRIBUTING.md",
     "justfile",
     "pyproject.toml",
+    "qa/CONSUMER-EVIDENCE.json",
+    "qa/CONSUMERS.md",
     "qa/FIXTURE-EVIDENCE.json",
     "qa/MIT-LICENSE.txt",
     "qa/README.md",
     "qa/capabilities.json",
     "qa/check_artifact.py",
+    "qa/check_consumers.py",
     "qa/check_stage.py",
     "qa/destination-owned.json",
     "qa/schemas/PROVENANCE.md",
     "qa/schemas/mcp.schema.json",
     "qa/schemas/plugin.schema.json",
     "tests/test_conformance.py",
+    "tests/test_consumers.py",
     "uv.lock"
   ]
 }

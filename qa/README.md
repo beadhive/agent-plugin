@@ -62,3 +62,6 @@ permission and never reads canonical source, GitHub source tokens or private clo
 Git-tracked files cannot hide behind local cache/hive exclusions. Fixture generation never
 executes bundled runtime scripts. Reviewed upgrades are needed to change corpus/layout,
 schemas or extension mapping.
+
+Consumer preparation, pinned public installation commands and the pending public
+staging boundary are recorded in [CONSUMERS.md](CONSUMERS.md).
