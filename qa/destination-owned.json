@@ -1,0 +1,22 @@
+{
+  "purpose": "Destination-owned public QA; separate from canonical generated payload and its receipt.",
+  "files": [
+    ".github/workflows/conformance.yml",
+    ".gitignore",
+    "CONTRIBUTING.md",
+    "justfile",
+    "pyproject.toml",
+    "qa/FIXTURE-EVIDENCE.json",
+    "qa/MIT-LICENSE.txt",
+    "qa/README.md",
+    "qa/capabilities.json",
+    "qa/check_artifact.py",
+    "qa/check_stage.py",
+    "qa/destination-owned.json",
+    "qa/schemas/PROVENANCE.md",
+    "qa/schemas/mcp.schema.json",
+    "qa/schemas/plugin.schema.json",
+    "tests/test_conformance.py",
+    "uv.lock"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "scope": "Validator preparation only; no allocated release candidate or public acceptance",
+  "fixture": "Existing Linux full-corpus Agent Plugins trial, copied only to a temporary directory",
+  "sourceCommit": "a6d758bb277b396e706f5017cbaf8917dc4ddb62",
+  "hitchRevision": "788c3821b6ca30578aa2baa6751e436f97ee9660",
+  "trialPayloadHashFromIndependentQA": "0e0528d9c43f31551b3f764a3562a47aef4a96f6aa26248be617e2a70e90b18f",
+  "temporaryUnallocatedFixtureReceiptDigest": "811390c6c0435cc031a447061fea8bd7960aa2ee576accfc8719b48070a15a73",
+  "files": 127,
+  "skills": 20,
+  "agents": 11,
+  "validatorResult": "pass",
+  "publicCandidateAllocated": false,
+  "publicPayloadStaged": false,
+  "publicAcceptance": "pending separate bead bh-ap-exc",
+  "privateSourceCredentialsUsed": false,
+  "bundledCodeExecuted": false,
+  "provenanceBoundary": "Temporary self-consistent fixture receipt is not independent immutable provenance. Paired release gate must pin candidate digest and source/tool/version identity; optional expected-candidate-digest enforces a reviewed external digest without private source access."
+}
