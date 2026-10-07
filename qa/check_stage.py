@@ -3,13 +3,17 @@
 from pathlib import Path
 import json
 import subprocess
-from check_artifact import ROOT, HOST_PARTS, PRIVATE_PARTS, validate, require
+import sys
+from check_artifact import ROOT, HOST_PARTS, PRIVATE_PARTS, require
 
 
 def main():
     manifest=ROOT/'plugin.json'; receipt=ROOT/'release-receipt.json'
     if manifest.exists() or receipt.exists():
-        print(json.dumps(validate(ROOT,receipt,destination=True),sort_keys=True))
+        # Reuse the public CLI's sanitized schema/YAML/JSON diagnostics. Never
+        # let exception formatting echo malformed payload data in local checks.
+        result=subprocess.run([sys.executable,str(ROOT/'qa/check_artifact.py'),'--artifact',str(ROOT),'--receipt',str(receipt),'--destination','--require-artifact'])
+        raise SystemExit(result.returncode)
     else:
         owned=set(json.loads((ROOT/'qa/destination-owned.json').read_text())['files'])
         allowed=owned|{'README.md','CONTRIBUTING.md','.gitignore'}

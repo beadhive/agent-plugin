@@ -72,6 +72,23 @@ class Conformance(unittest.TestCase):
     def test_valid_self_contained_fixture(self):
         self.assertEqual(self.validate()['skills'],20)
 
+    def test_local_staged_check_diagnostics_do_not_echo_input(self):
+        sentinel='sk-ant-api03-SYNTHETIC_LOCAL_STAGE_DO_NOT_ECHO_1234567890'
+        plugin=json.loads((self.root/'plugin.json').read_text());plugin['name']=sentinel
+        write(self.root/'plugin.json',json.dumps(plugin));self.resign()
+        owned=json.loads((check.ROOT/'qa/destination-owned.json').read_text())['files']
+        for name in owned:
+            path=self.root/name;path.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copy2(check.ROOT/name,path)
+        subprocess.run(['git','init','-q',str(self.root)],check=True,capture_output=True)
+        subprocess.run(['git','-C',str(self.root),'add','.'],check=True,capture_output=True)
+        result=subprocess.run([sys.executable,str(self.root/'qa/check_stage.py')],capture_output=True,text=True)
+        self.assertEqual(result.returncode,1)
+        self.assertIn('official pinned schema validation',result.stderr)
+        self.assertNotIn(sentinel,result.stderr)
+        self.assertNotIn(sentinel,result.stdout)
+        self.assertNotIn('Traceback',result.stderr)
+
     def test_cli_metadata_diagnostics_do_not_echo_input(self):
         sentinel='sk-ant-api03-SYNTHETIC_DO_NOT_ECHO_THIS_SENTINEL_1234567890'
         def run_cli():
