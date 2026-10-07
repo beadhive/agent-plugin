@@ -1,0 +1,6 @@
+{
+  "native": ["plugin", "skills", "mcp"],
+  "embeddedInert": ["agents", "instructions", "permissions", "personas"],
+  "runtimeEnforcementClaimed": false,
+  "notes": "Agent Plugins 1.0.0 assigns no semantics to extension namespace contents. Native MCP startup and skill discovery require separate real-client acceptance; these static checks establish bundling and conformance only."
+}

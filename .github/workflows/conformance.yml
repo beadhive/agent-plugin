@@ -1,0 +1,23 @@
+name: Public destination conformance
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install locked public QA dependencies
+        run: |
+          python3 -m venv /tmp/agent-plugin-qa
+          /tmp/agent-plugin-qa/bin/pip install 'uv==0.12.1'
+          /tmp/agent-plugin-qa/bin/uv sync --locked
+      - name: Test validator controls
+        run: /tmp/agent-plugin-qa/bin/uv run --locked python -m unittest discover -s tests -v
+      - name: Require generated public artifact and receipt
+        run: /tmp/agent-plugin-qa/bin/uv run --locked python qa/check_artifact.py --artifact . --receipt release-receipt.json --destination --require-artifact

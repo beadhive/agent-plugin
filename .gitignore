@@ -6,3 +6,5 @@
 .claude/settings.local.json
 .writable_roots
 .DS_Store
+.venv/
+__pycache__/
