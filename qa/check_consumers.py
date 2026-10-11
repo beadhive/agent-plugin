@@ -94,12 +94,11 @@ def check_copy(source, installed, selected):
         require((copied / 'LICENSE').read_bytes() == (source / 'LICENSE').read_bytes(), 'Installed license drift')
 
 
-def public_skills(artifact, commit, base, env):
-    source = PUBLIC + '/tree/' + commit
+def skills_installations(artifact, source, base, env):
     require(run(CLI + ['--version'], base, env).strip() == '1.7.0', 'skills CLI version drift')
     listing = run(CLI + ['add', source, '--list'], base, env)
     found = set(re.findall(r'^│    ([a-z][a-z-]+)\s*$', listing, re.M))
-    require(found == EXPECTED_SKILLS, 'Public skill discovery drift')
+    require(found == EXPECTED_SKILLS, 'Skill discovery drift')
     records = companions(artifact)
     requests = [('single-' + name, [name]) for name in sorted(EXPECTED_SKILLS)]
     requests += [(name + '-required', closure(records, [name])) for name in sorted(EXPECTED_SKILLS)
@@ -224,7 +223,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--commit', required=True, help='Exact reviewed destination Git SHA')
     parser.add_argument('--candidate-digest', required=True, help='Independent paired-gate payload candidate pin')
-    parser.add_argument('--staged', type=Path, help='Local generated destination; native preparation ONLY')
+    parser.add_argument('--staged', type=Path, help='Local generated destination; CLI and native preparation only')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     require(re.fullmatch('[0-9a-f]{40}', args.commit), 'Full destination commit required')
@@ -249,11 +248,12 @@ def main():
                     'sourceCommit': receipt['sourceCommit'], 'hitchRevision': receipt['hitchRevision'],
                     'candidateDigest': receipt['digest'], 'payloadDigest': receipt['payloadDigest'],
                     'platform': os.uname().sysname, 'ownershipSwitchAuthorized': False}
-        if not args.staged:
-            evidence['skillsCli'] = public_skills(artifact, args.commit, base, env)
+        source = str(artifact) if args.staged else PUBLIC + '/tree/' + args.commit
+        evidence['skillsCli'] = skills_installations(artifact, source, base, env)
+        evidence['skillsCli']['sourceKind'] = 'local artifact' if args.staged else 'pinned public GitHub URL'
         evidence['native'] = native(artifact, base, env)
         args.output.write_text(json.dumps(evidence, indent=2) + '\n')
-        print('Staged native preparation passed; public acceptance PENDING' if args.staged else 'Public consumers passed')
+        print('Staged CLI and native preparation passed; public acceptance PENDING' if args.staged else 'Public consumers passed')
 
 
 if __name__ == '__main__':

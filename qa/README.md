@@ -22,6 +22,7 @@ candidate or orchestration promotion receipt; the paired release gate verifies
 both independently. Hitch does not inject or rewrite the sidecar.
 
 ```sh
+umask 022
 just check
 just accept
 uv run --locked python qa/check_artifact.py --artifact /path/to/generated/package \
@@ -31,8 +32,8 @@ uv run --locked python qa/check_artifact.py --artifact /path/to/generated/packag
 `just check` tests synthetic malformed-artifact controls and can report **preparation
 only, acceptance pending** while this documentation scaffold lacks generated output.
 Public CI and `just accept` always require actual output and its sidecar; deleting both
-cannot downgrade acceptance to a passing preparation check. The preparation branch
-therefore awaits full canonical staging before public CI can pass. No candidate release
+cannot downgrade acceptance to a passing preparation check. The local preparation therefore awaits reviewed AGF main delivery and public
+push before public consumer acceptance can pass. No candidate release
 has been allocated by this QA bead.
 
 Validation freezes the official Agent Plugins 1.0.0 schemas offline, checks exact
@@ -65,3 +66,7 @@ schemas or extension mapping.
 
 Consumer preparation, pinned public installation commands and the pending public
 staging boundary are recorded in [CONSUMERS.md](CONSUMERS.md).
+
+Checkout and AGF validation require `umask 022` for exact filesystem `644`/`755`
+receipt agreement; see [CONSUMERS.md](CONSUMERS.md). Default `002` checkout modes
+failed conformance and do not establish acceptance.

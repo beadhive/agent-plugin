@@ -1,0 +1,89 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "beadhive",
+  "version": "0.6.0",
+  "description": "Canonical Beadhive full corpus validation candidate.",
+  "author": {
+    "name": "Brian Cripe"
+  },
+  "license": "MIT",
+  "extensions": {
+    "io.github.briancripe.agent-hitch": {
+      "version": 1,
+      "resources": {
+        "agents": "./io.github.briancripe.agent-hitch/agents",
+        "instructions": "./io.github.briancripe.agent-hitch/instructions",
+        "permissions": "./io.github.briancripe.agent-hitch/permissions",
+        "personas": "./io.github.briancripe.agent-hitch/personas"
+      },
+      "agents": [
+        {
+          "name": "analyst",
+          "tier": "default"
+        },
+        {
+          "name": "controller",
+          "tier": "default"
+        },
+        {
+          "name": "custodian",
+          "tier": "default"
+        },
+        {
+          "name": "developer",
+          "tier": "default"
+        },
+        {
+          "name": "director",
+          "tier": "deep"
+        },
+        {
+          "name": "dispatcher",
+          "tier": "default"
+        },
+        {
+          "name": "merger",
+          "tier": "default"
+        },
+        {
+          "name": "planner",
+          "tier": "deep"
+        },
+        {
+          "name": "reviewer",
+          "tier": "default"
+        },
+        {
+          "name": "supervisor",
+          "tier": "deep"
+        },
+        {
+          "name": "warden",
+          "tier": "deep"
+        }
+      ],
+      "requirements": {
+        "os": [
+          "darwin",
+          "linux"
+        ],
+        "shells": [
+          "bash",
+          "zsh"
+        ],
+        "binaries": [
+          {
+            "name": "bh",
+            "version": ">=0.3.0"
+          },
+          {
+            "name": "bh-mcp"
+          },
+          {
+            "name": "uv"
+          }
+        ]
+      }
+    }
+  }
+}

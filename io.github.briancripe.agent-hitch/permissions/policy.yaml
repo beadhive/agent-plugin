@@ -1,0 +1,284 @@
+version: 1
+applications:
+  shell:
+    executable: '*'
+    operations:
+      any:
+        classification: shell
+        severity: medium
+        description: Default shell fallback — prompt before running unknown commands.
+  bh:
+    executable: bh
+    operations:
+      help:
+        arguments:
+        - --help*
+        classification: cli
+        severity: low
+        description: Show bh help.
+      version:
+        arguments:
+        - --version*
+        classification: cli
+        severity: low
+        description: Show bh version.
+      work-brief:
+        arguments:
+        - work
+        - brief*
+        classification: workflow
+        severity: low
+        description: Brief a bead.
+      work-ready:
+        arguments:
+        - work
+        - ready*
+        classification: workflow
+        severity: low
+        description: List ready beads.
+      work-issue:
+        arguments:
+        - work
+        - issue*
+        classification: workflow
+        severity: low
+        description: Show bead issue details.
+      work-list:
+        arguments:
+        - work
+        - list*
+        classification: workflow
+        severity: low
+        description: List beads.
+      work-schedule:
+        arguments:
+        - work
+        - schedule*
+        classification: workflow
+        severity: low
+        description: Schedule a bead.
+      work-show:
+        arguments:
+        - work
+        - show*
+        classification: workflow
+        severity: low
+        description: Show bead status.
+      work-review:
+        arguments:
+        - work
+        - review*
+        classification: workflow
+        severity: low
+        description: Start a bead review.
+      work-claim:
+        arguments:
+        - work
+        - claim*
+        classification: workflow
+        severity: medium
+        description: Claim a bead — provisions a worktree and flips the bead to in_progress.
+      work-submit:
+        arguments:
+        - work
+        - submit*
+        classification: workflow
+        severity: medium
+        description: Submit a claimed bead for review.
+      plan-show:
+        arguments:
+        - plan
+        - show*
+        classification: planning
+        severity: low
+        description: Show plan details.
+      plan-check:
+        arguments:
+        - plan
+        - check*
+        classification: planning
+        severity: low
+        description: Validate a plan.
+      plan-status:
+        arguments:
+        - plan
+        - status*
+        classification: planning
+        severity: low
+        description: Show plan status summary.
+      hive-ls:
+        arguments:
+        - hive
+        - ls*
+        classification: hive
+        severity: low
+        description: List hive information.
+      hive-ready:
+        arguments:
+        - hive
+        - ready*
+        classification: hive
+        severity: low
+        description: Show ready hives.
+      hive-survey:
+        arguments:
+        - hive
+        - survey*
+        classification: hive
+        severity: low
+        description: Survey hive state.
+      hive-prefix:
+        arguments:
+        - hive
+        - prefix*
+        classification: hive
+        severity: low
+        description: Inspect hive prefixes.
+      hive-classify:
+        arguments:
+        - hive
+        - classify*
+        classification: hive
+        severity: low
+        description: Classify hive beads.
+      worktree-ls:
+        arguments:
+        - worktree
+        - ls*
+        classification: workflow
+        severity: low
+        description: List worktree entries.
+  bd:
+    executable: bd
+    operations:
+      show:
+        arguments:
+        - show*
+        classification: workflow
+        severity: low
+        description: Show bead details.
+      list:
+        arguments:
+        - list*
+        classification: workflow
+        severity: low
+        description: List beads.
+      ready:
+        arguments:
+        - ready*
+        classification: workflow
+        severity: low
+        description: Show ready beads.
+      blocked:
+        arguments:
+        - blocked*
+        classification: workflow
+        severity: low
+        description: Show blocked beads.
+      stats:
+        arguments:
+        - stats*
+        classification: workflow
+        severity: low
+        description: Show bead statistics.
+      search:
+        arguments:
+        - search*
+        classification: workflow
+        severity: low
+        description: Search beads.
+      children:
+        arguments:
+        - children*
+        classification: workflow
+        severity: low
+        description: List bead children.
+      count:
+        arguments:
+        - count*
+        classification: workflow
+        severity: low
+        description: Count beads.
+      info:
+        arguments:
+        - info*
+        classification: workflow
+        severity: low
+        description: Show bead info.
+      version:
+        arguments:
+        - version*
+        classification: cli
+        severity: low
+        description: Show bd version.
+      help:
+        arguments:
+        - help*
+        classification: cli
+        severity: low
+        description: Show bd help.
+rules:
+- operation: shell.any
+  decision: ask
+- operation: bh.help
+  decision: allow
+- operation: bh.version
+  decision: allow
+- operation: bh.work-brief
+  decision: allow
+- operation: bh.work-ready
+  decision: allow
+- operation: bh.work-issue
+  decision: allow
+- operation: bh.work-list
+  decision: allow
+- operation: bh.work-schedule
+  decision: allow
+- operation: bh.work-show
+  decision: allow
+- operation: bh.work-review
+  decision: allow
+- operation: bh.work-claim
+  decision: ask
+- operation: bh.work-submit
+  decision: ask
+- operation: bh.plan-show
+  decision: allow
+- operation: bh.plan-check
+  decision: allow
+- operation: bh.plan-status
+  decision: allow
+- operation: bh.hive-ls
+  decision: allow
+- operation: bh.hive-ready
+  decision: allow
+- operation: bh.hive-survey
+  decision: allow
+- operation: bh.hive-prefix
+  decision: allow
+- operation: bh.hive-classify
+  decision: allow
+- operation: bh.worktree-ls
+  decision: allow
+- operation: bd.show
+  decision: allow
+- operation: bd.list
+  decision: allow
+- operation: bd.ready
+  decision: allow
+- operation: bd.blocked
+  decision: allow
+- operation: bd.stats
+  decision: allow
+- operation: bd.search
+  decision: allow
+- operation: bd.children
+  decision: allow
+- operation: bd.count
+  decision: allow
+- operation: bd.info
+  decision: allow
+- operation: bd.version
+  decision: allow
+- operation: bd.help
+  decision: allow
