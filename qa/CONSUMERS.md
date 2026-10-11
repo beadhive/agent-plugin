@@ -10,11 +10,19 @@ tracked by **Verify public skills installation and native Agent Plugins loading
 
 ## Best-effort local preparation
 
+Set `umask 022` before checkout, AGF submission/merge/finish, and either consumer
+probe. The conformance gate compares actual filesystem permissions with the
+receipt's exact `644`/`755` modes. The default `002` mask produced `664`/`775` in
+an AGF clean checkout and correctly failed conformance; it is not a passing QA
+environment. A different mask requires a fresh checkout under `022` before QA.
+
+
 From this QA tree, supply the complete committed generated destination and exact
 commit. The independently reviewed immutable payload candidate digest is
 `9e49c0951d0f06b25dcff7d736f7a8632514a9a98dcc5a07ce1e4fd71d8d700e`.
 
 ```sh
+umask 022
 uv run --locked python qa/check_consumers.py \
   --staged /path/to/committed-destination --commit EXACT_COMMITTED_SHA \
   --candidate-digest 9e49c0951d0f06b25dcff7d736f7a8632514a9a98dcc5a07ce1e4fd71d8d700e \
@@ -49,6 +57,7 @@ Run without `--staged` only after the owning merger finishes AGF delivery and th
 coordinator verifies origin main. Substitute the actual publicly fetched main SHA:
 
 ```sh
+umask 022
 uv run --locked python qa/check_consumers.py --commit PUBLIC_MAIN_SHA \
   --candidate-digest 9e49c0951d0f06b25dcff7d736f7a8632514a9a98dcc5a07ce1e4fd71d8d700e \
   --output /tmp/public-consumers.json

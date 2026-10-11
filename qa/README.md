@@ -22,6 +22,7 @@ candidate or orchestration promotion receipt; the paired release gate verifies
 both independently. Hitch does not inject or rewrite the sidecar.
 
 ```sh
+umask 022
 just check
 just accept
 uv run --locked python qa/check_artifact.py --artifact /path/to/generated/package \
@@ -65,3 +66,7 @@ schemas or extension mapping.
 
 Consumer preparation, pinned public installation commands and the pending public
 staging boundary are recorded in [CONSUMERS.md](CONSUMERS.md).
+
+Checkout and AGF validation require `umask 022` for exact filesystem `644`/`755`
+receipt agreement; see [CONSUMERS.md](CONSUMERS.md). Default `002` checkout modes
+failed conformance and do not establish acceptance.
