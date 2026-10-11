@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 QA = Path(__file__).resolve().parents[1] / 'qa'
 sys.path.insert(0, str(QA))
-from check_consumers import check_copy, closure, isolated_env, main
+from check_consumers import check_copy, closure, isolated_env, main, skills_installations
 
 
 class ConsumerControls(unittest.TestCase):
@@ -54,3 +54,23 @@ class ConsumerControls(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'Full destination commit required'):
                     main()
                 command.assert_not_called()
+
+
+class LocalInstallerControls(unittest.TestCase):
+    def test_local_source_runs_real_matrix_without_remote_url(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            artifact = base / 'artifact'
+            artifact.mkdir()
+            with patch('check_consumers.EXPECTED_SKILLS', {'example'}), \
+                 patch('check_consumers.SET_REQUESTS', {}), \
+                 patch('check_consumers.companions', return_value={'example': ([], {})}), \
+                 patch('check_consumers.check_copy') as copied, \
+                 patch('check_consumers.run', side_effect=['1.7.0', '│    example\n', '']) as command:
+                report = skills_installations(artifact, str(artifact), base, {})
+            self.assertEqual(report['source'], str(artifact))
+            self.assertEqual(report['uniqueInstallations'], 1)
+            self.assertEqual(len(report['installations']), 2)
+            self.assertEqual(command.call_args_list[1].args[0][-2:], [str(artifact), '--list'])
+            self.assertEqual(command.call_args_list[2].args[0][7], str(artifact))
+            copied.assert_called_once()

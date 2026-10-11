@@ -31,8 +31,8 @@ uv run --locked python qa/check_artifact.py --artifact /path/to/generated/packag
 `just check` tests synthetic malformed-artifact controls and can report **preparation
 only, acceptance pending** while this documentation scaffold lacks generated output.
 Public CI and `just accept` always require actual output and its sidecar; deleting both
-cannot downgrade acceptance to a passing preparation check. The preparation branch
-therefore awaits full canonical staging before public CI can pass. No candidate release
+cannot downgrade acceptance to a passing preparation check. The local preparation therefore awaits reviewed AGF main delivery and public
+push before public consumer acceptance can pass. No candidate release
 has been allocated by this QA bead.
 
 Validation freezes the official Agent Plugins 1.0.0 schemas offline, checks exact

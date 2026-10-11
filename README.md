@@ -1,22 +1,9 @@
-# beadhive/agent-plugin
+# beadhive
 
-Public generated distribution targeting the [Agent Plugins standard](https://agent-plugins.org/).
-This initial repository contains documentation only; generated distribution
-artifacts will arrive through the subsequent validated migration.
+Canonical Beadhive full corpus validation candidate.
 
-## Migration boundary
+An [Agent Plugins 1.0.0](https://agent-plugins.org) package, generated from a Hitch pack.
 
-`beadhive/skills` will become the canonical authoring source.
-`beadhive/agent-plugin` will contain generated public artifacts.
-`beadhive/claude-plugin` remains public with hive prefix `bh-cp`; preserve its
-existing content and installation coordinates (marketplace `beadhive`, plugin
-`bh`). It becomes another generated output target only after migration
-validation.
+Portable components load in any conformant client: skills from `skills/`, MCP servers from `mcp.json`.
 
-Private source content may be published only through an explicit, reviewed
-artifact allowlist. Publication is deny-by-default: never mirror the private
-repository or publish unlisted source files, hive data, or supporting resources.
-No publication pipeline or allowlist is implemented by this initial scaffold.
-
-Skills migration, agent-hitch implementation, and release automation are
-subsequent work.
+Non-portable resources hitch carries live under `io.github.briancripe.agent-hitch/` and the matching `extensions` key in `plugin.json`. Clients that do not implement that namespace ignore both, by specification.
