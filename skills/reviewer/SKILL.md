@@ -1,0 +1,68 @@
+---
+compatibility: "Requires bh CLI and companion work/operator-communication skills. Human review gate decisions require supervised authority; plugin metadata alone does not grant it."
+name: reviewer
+description: >-
+  Role guide for a REVIEWER — the human-supervised seat that walks an approved branch before the
+  Merger lands it. Use when reviewing a submitted bead or (primarily) a molecule before merge:
+  read the intent + change, run tests and a feature demo locally, verify against acceptance
+  criteria, then resolve the review gate (approve) or bounce it back (changes-requested).
+---
+
+# Reviewer — interactive PR-style walkthrough before merge
+
+## Operator communication
+
+When reporting review status or asking the operator to choose, load
+[`bh:operator-communication`](../operator-communication/SKILL.md). Use its decision-ask and
+status-summary structures, including friendly bead title plus id and the exact lifecycle state.
+
+Your duty: judge whether an approved-pending branch is correct and complete against the epic's
+intent, then make the gate decision. You do **not** implement (that's the Developer) or run the
+serialized merge (that's the Merger). In **supervised** mode `bh work submit` opens a *human*
+review gate and leaves the branch intact — that gate is your cue.
+
+Primary case: **molecule → integration branch** (an epic's container branch `wt/bead/epic/<epic>`
+landing). Secondary, rarer case: **issue → `wt/bead/epic/<epic>`** (UAT-style functional review of
+one bead against the epic).
+
+## The one verb
+
+```text
+bh work review <id> [--run] [--demo] [--view diff|stat|log|sig]…
+```
+
+Read-only re: bd/git state. Molecule-aware: if the container branch `wt/bead/epic/<id>` exists it
+reviews the whole molecule against the integration branch; otherwise it reviews the leaf bead
+branch `wt/bead/issue/<id>`. It prints:
+
+- **Intent** — the epic/bead brief (requirements, design, acceptance) and, for a molecule, **every
+  child's acceptance criteria** (`--all`, so landed children show too) + the current review state.
+- **Change** — commits / `diff` / `stat` of the branch against its integration target.
+- **Validation** (`--run`) — `validate_cmd` run from a pristine `clean_checkout`, exit code reported.
+- **Demo** (`--demo`) — `demo_cmd` (config `work.demo_cmd`) run from a pristine checkout so you can
+  exercise the feature with the real app; prints "no demo_cmd configured" if unset.
+
+## The walkthrough
+
+1. `bh work review <epic> --run --view stat` — read the intent + child acceptance, scan the change
+   shape, confirm tests pass from a clean checkout.
+2. `bh work review <epic> --view diff` — read the diff. Call out **critical sections** by
+   `file:line`: money/security paths, error handling, branches, loops, parsers, anything touching a
+   trust boundary. Verify each against the relevant child's acceptance criteria.
+3. `bh work review <epic> --demo` — demo the feature with the real app (when `demo_cmd` is set).
+4. **Verify completeness:** does the change satisfy the epic's requirements and *every* child's
+   acceptance? Flag missing logic, requirement conflicts, or untested edge cases.
+5. **Decide:**
+   - **Approve** → `bh work approve <id> --as <you>` — the first-class review-approve verb. It
+     resolves the bead's HUMAN review gate through the bh convention layer (attributes you on the
+     audit trail, wraps `bd gate resolve` internally), so you need **no** `bh bd` passthrough /
+     `BH_BD_PASS_ENABLED` override. It refuses a non-review gate (e.g. a kickoff gate) or an
+     out-of-process `gh:*` gate (those resolve via CI / PR merge, not here). The Merger then runs
+     `bh work merge --molecule <epic>` (or `bh work merge <id>` for a single bead).
+   - **Bounce** → `bh work bounce <id> -m "…" --as <you>`. It resolves every open review gate,
+     records `review=changes-requested` with your feedback, and points the Dispatcher at the
+     Developer's `bh work resume <id>`. For a batch's shared gate, bouncing any member bounces the
+     whole group. **Never silently drop work.**
+
+Approving is a deliberate act: resolve the gate only once you've read the change, seen tests green,
+and confirmed the intent is met. Reviewing never mutates the branch — your output is the decision.
