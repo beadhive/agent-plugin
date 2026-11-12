@@ -2,7 +2,7 @@
 
 `CONSUMER-EVIDENCE.json` preserves the historical Linux native preparation result
 from Codex 0.160.0. It establishes no public consumer acceptance. The current
-0.6.0 delivery uses independently reviewed AGF main integration: local checks,
+0.9.0 delivery uses independently reviewed AGF main integration: local checks,
 submission, approval, molecule finish, then origin-main push. No release branch
 or pull request is required. Public installation acceptance remains separately
 tracked by **Verify public skills installation and native Agent Plugins loading
@@ -19,17 +19,17 @@ environment. A different mask requires a fresh checkout under `022` before QA.
 
 From this QA tree, supply the complete committed generated destination and exact
 commit. The independently reviewed immutable payload candidate digest is
-`9e49c0951d0f06b25dcff7d736f7a8632514a9a98dcc5a07ce1e4fd71d8d700e`.
+`b3ee7d16f0439ed2e36f0d198cad21986e7f2709104e5eba1f43fb3622ea4727`.
 
 ```sh
 umask 022
 uv run --locked python qa/check_consumers.py \
   --staged /path/to/committed-destination --commit EXACT_COMMITTED_SHA \
-  --candidate-digest 9e49c0951d0f06b25dcff7d736f7a8632514a9a98dcc5a07ce1e4fd71d8d700e \
+  --candidate-digest b3ee7d16f0439ed2e36f0d198cad21986e7f2709104e5eba1f43fb3622ea4727 \
   --output /tmp/local-consumers.json
 ```
 
-Both modes run real `skills@1.7.0` discovery, all twenty single installs,
+Both modes run real `skills@1.7.0` discovery, all twenty-seven single installs,
 transitive required/reference sets, nine documented mode sets and the complete
 corpus. Identical sets share installations while preserving every request in
 evidence. Local mode passes the validated checkout path to the CLI; public mode
@@ -42,7 +42,7 @@ No real client configuration is modified.
 
 Native Codex loading uses an isolated local marketplace adapter containing only
 receipt-listed bytes from the verified destination. The harness measures actual
-client version, all twenty skill names, plugin enablement, declared stdio
+client version, all twenty-seven skill names, plugin enablement, declared stdio
 `bh-mcp` startup and tool listing. Existing authorized Codex authentication is
 referenced only when available. No model turns or MCP tool calls run. Agents,
 instructions, permissions and planning persona are embedded inert: no execution,
@@ -59,7 +59,7 @@ coordinator verifies origin main. Substitute the actual publicly fetched main SH
 ```sh
 umask 022
 uv run --locked python qa/check_consumers.py --commit PUBLIC_MAIN_SHA \
-  --candidate-digest 9e49c0951d0f06b25dcff7d736f7a8632514a9a98dcc5a07ce1e4fd71d8d700e \
+  --candidate-digest b3ee7d16f0439ed2e36f0d198cad21986e7f2709104e5eba1f43fb3622ea4727 \
   --output /tmp/public-consumers.json
 ```
 
@@ -68,7 +68,7 @@ SHA and validates the complete immutable inventory/receipt before invoking the
 remote-source CLI matrix and native adapter. Failure exits nonzero without a
 success report. Local preparation always records `publicAcceptance: pending`.
 Public reports pin actual destination SHA, source/compiler identity, release/pack
-0.6.0, candidate digest and payload digest; they authorize no ownership change.
+0.9.0, candidate digest and payload digest; they authorize no ownership change.
 The coordinator records actual AGF review gate, approved reviewer, merger, closed
 molecule and public-main readback separately from immutable payload provenance.
 QA revisions require separately reviewed exact path/hash/mode inventories. The

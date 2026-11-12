@@ -70,7 +70,7 @@ class Conformance(unittest.TestCase):
     def resign(self): self.sidecar=receipt(self.root)
 
     def test_valid_self_contained_fixture(self):
-        self.assertEqual(self.validate()['skills'],20)
+        self.assertEqual(self.validate()['skills'],27)
 
     def test_local_staged_check_diagnostics_do_not_echo_input(self):
         sentinel='sk-ant-api03-SYNTHETIC_LOCAL_STAGE_DO_NOT_ECHO_1234567890'
@@ -111,7 +111,7 @@ class Conformance(unittest.TestCase):
 
     def test_independent_candidate_pin_rejects_resigned_payload(self):
         pinned=json.loads(self.sidecar.read_text())['digest']
-        self.assertEqual(check.validate(self.root,self.sidecar,expected_candidate_digest=pinned)['skills'],20)
+        self.assertEqual(check.validate(self.root,self.sidecar,expected_candidate_digest=pinned)['skills'],27)
         (self.root/'README.md').write_text('Self-consistent replacement payload, not approved candidate')
         self.resign()
         with self.assertRaisesRegex(ValueError,'independently pinned'):check.validate(self.root,self.sidecar,expected_candidate_digest=pinned)
@@ -201,7 +201,7 @@ class Conformance(unittest.TestCase):
         subprocess.run(['git','-C',str(self.root),'add','.'],check=True,capture_output=True)
         write(self.root/'.venv/cache.md','[unrelated private local cache](/absent/file)')
         write(self.root/'.repowise/wiki.md','[unrelated factory cache](../missing.md)')
-        self.assertEqual(check.validate(self.root,self.sidecar,destination=True)['skills'],20)
+        self.assertEqual(check.validate(self.root,self.sidecar,destination=True)['skills'],27)
         write(self.root/'.beads/secret.jsonl','private hive record')
         subprocess.run(['git','-C',str(self.root),'add','-f','.beads/secret.jsonl'],check=True,capture_output=True)
         with self.assertRaisesRegex(ValueError,'tracked private'): check.validate(self.root,self.sidecar,destination=True)

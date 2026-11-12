@@ -38,7 +38,7 @@ has been allocated by this QA bead.
 
 Validation freezes the official Agent Plugins 1.0.0 schemas offline, checks exact
 inventory hashes/modes, contained root/resources/Markdown/guide references, the complete
-20-skill/11-agent roster, copy-preserved companions/support, exact root/leaf MIT notices,
+27-skill/14-agent roster, copy-preserved companions/support, exact root/leaf MIT notices,
 native `bh-mcp`, and explicit extension capability mapping. Unexpected paths, symlinks,
 private source/cache paths, operational local path/key residue, duplicate metadata and
 unreviewed native skill frontmatter fail. Existing standard `allowed-tools`/guide metadata
