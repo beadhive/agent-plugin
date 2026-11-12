@@ -19,8 +19,8 @@ RESOURCES = {'agents','instructions','permissions','personas'}
 HOST_PARTS = {'.git','.venv','__pycache__','.beads','.repowise','.bh'}
 PRIVATE_PARTS = {'.git','.beads','.bh','.repowise','.venv','.aws','.codex','.claude','resources','schemas','docs','hitch.yaml','hitch.build.yaml','uv.lock','pyproject.toml','skill-dependencies.json'}
 SEMVER = r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-((?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?'
-EXPECTED_AGENTS = {'analyst','controller','custodian','developer','director','dispatcher','merger','planner','reviewer','supervisor','warden'}
-EXPECTED_SKILLS = {'backfill','control','developer','dispatcher','groom','merger','modularize','operator-communication','overview','plan','planner','plugins','refactor','replan','retro','reviewer','setup','setup-git-workspace','triage','work'}
+EXPECTED_AGENTS = {'analyst','controller','custodian','developer','director','dispatcher','ideator','merger','planner','reviewer','spike-runner','supervisor','triager','warden'}
+EXPECTED_SKILLS = {'backfill','batch-run','brainstorm','control','developer','dispatcher','groom','intake-triage','merger','modularize','operator-communication','overview','plan','planner','plugins','propose','refactor','replan','reproduce','retro','reviewer','setup','setup-git-workspace','spike-report','triage','vision-scan','work'}
 
 
 def require(condition, message):
